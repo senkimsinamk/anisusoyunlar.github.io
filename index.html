@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Mağazası</title>
+    <style>
+        :root {
+            --bg-color: #111;
+            --text-color: #eee;
+            --accent-color: #4caf50;
+            --secondary-bg: #222;
+            --border-color: #333;
+            --header-height: 60px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-bg);
+            height: var(--header-height);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            color: var(--accent-color);
+            font-size: 28px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+        }
+
+        .section-title {
+            margin: 30px 0 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .info-banner {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            padding: 12px;
+            border-radius: 4px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .game-list {
+            list-style: none;
+        }
+
+        .game-item {
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .game-item:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        .game-title {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .game-price {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .search-container {
+            padding: 20px 0;
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        #search-results {
+            display: none;
+            margin-bottom: 30px;
+        }
+
+        #search-results.active {
+            display: block;
+        }
+
+        .search-info {
+            background-color: var(--secondary-bg);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-search {
+            color: var(--accent-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                height: auto;
+                padding: 10px 0;
+            }
+            
+            .nav-menu {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-icon">⚡</span>
+                    Oyun Mağazası
+                </a>
+                <nav class="nav-menu">
+                    <a href="#" class="nav-link">Anasayfa</a>
+                    <a href="#" class="nav-link">Tüm Oyunlar</a>
+                    <a href="#" class="nav-link">Kategoriler</a>
+                    <a href="#" class="nav-link">İndirimdekiler</a>
+                </nav>
+                <div class="user-actions">
+                    <button class="icon-btn">
+                        <i>🔔</i>
+                    </button>
+                    <button class="icon-btn btn-primary">
+                        <i>👤</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Oyun ara...">
+            <button class="search-btn">Ara</button>
+        </div>
+
+        <!-- Arama Sonuçları Bölümü -->
+        <div id="search-results">
+            <div class="search-info">
+                <span id="results-count">0 sonuç bulundu</span>
+                <button class="clear-search">Aramayı Temizle</button>
+            </div>
+            <ul class="game-list" id="results-list"></ul>
+        </div>
+
+        <div class="info-banner">
+            Güncel Oyunlar, Listede bulunmayan oyunların mesajlar kısmından bize sormanız yeterlidir. Aradığınız oyunu kolay bulmak için "CTRL + F" yapıp oyun ismini aratabilirsiniz.
+        </div>
+
+        <h2 class="section-title">Yeni Eklenen Oyunlar</h2>
+        <ul class="game-list" id="new-games">
+            <!-- Oyunlar JavaScript ile eklenecek -->
+        </ul>
+
+        <h2 class="section-title">En Çok Satan Oyunlar</h2>
+        <ul class="game-list" id="popular-games">
+            <!-- Oyunlar JavaScript ile eklenecek -->
+        </ul>
+    </main>
+
+    <script>
+        // Örnek oyun verileri
+        const newGames = [
+            { title: "The First Berserker: Khazan Deluxe Edition", price: "50₺" },
+            { title: "InZOI", price: "50₺" },
+            { title: "The Last Of Us Part 2 Remastered", price: "50₺" },
+            { title: "Assassin's Creed Shadows Digital Deluxe Edition", price: "99.90₺" },
+            { title: "Split Fiction", price: "50₺" },
+            { title: "WWE 2K25 The Bloodline Edition", price: "50₺" },
+            { title: "Marvel's Spider-Man 2 Deluxe Edition", price: "" },
+            { title: "Kingdom Come: Deliverance II", price: "" },
+            { title: "FINAL FANTASY VII REBIRTH", price: "" },
+            { title: "Assetto Corsa EVO", price: "" },
+            { title: "Streamer Life Simulator 2", price: "" }
+        ];
+
+        const popularGames = [
+            { title: "FC 25 Ultimate Edition", price: "99.90₺" },
+            { title: "Silent Hill 2 Deluxe Edition", price: "" },
+            { title: "Horizon Zero Dawn Remastered", price: "" },
+            { title: "Dragon Age The Veilguard Deluxe Edition", price: "" },
+            { title: "GTA V Premium Edition", price: "59.90₺" },
+            { title: "Cyberpunk 2077 Ultimate Edition", price: "89.90₺" },
+            { title: "Resident Evil 4 Remake", price: "79.90₺" },
+            { title: "Elden Ring Shadow of the Erdtree Edition", price: "120₺" }
+        ];
+
+        // Oyunları listeye ekleyen fonksiyon
+        function renderGames(gameList, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // İçeriği temizle
+            
+            gameList.forEach(game => {
+                const li = document.createElement('li');
+                li.className = 'game-item';
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'game-title';
+                titleSpan.textContent = game.title;
+                
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'game-price';
+                priceSpan.textContent = game.price;
+                
+                li.appendChild(titleSpan);
+                li.appendChild(priceSpan);
+                container.appendChild(li);
+            });
+        }
+
+        // Sayfa yüklendiğinde oyunları listele
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGames(newGames, 'new-games');
+            renderGames(popularGames, 'popular-games');
+            
+            // Arama fonksiyonu
+            const searchInput = document.querySelector('.search-input');
+            const searchBtn = document.querySelector('.search-btn');
+            const searchResults = document.getElementById('search-results');
+            const resultsCount = document.getElementById('results-count');
+            const resultsList = document.getElementById('results-list');
+            const clearSearchBtn = document.querySelector('.clear-search');
+            
+            // Arama fonksiyonu
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                if (searchTerm === '') return;
+                
+                const allGames = [...newGames, ...popularGames];
+                const results = allGames.filter(game => 
+                    game.title.toLowerCase().includes(searchTerm)
+                );
+                
+                // Sonuçları göster
+                searchResults.classList.add('active');
+                resultsCount.textContent = `"${searchTerm}" için ${results.length} sonuç bulundu`;
+                renderGames(results, 'results-list');
+                
+                // Diğer oyun listelerini gizle veya göster
+                const shouldHideNormalLists = results.length > 0;
+                document.querySelector('.info-banner').style.display = shouldHideNormalLists ? 'none' : 'block';
+                document.querySelector('.section-title:nth-of-type(1)').style.display = shouldHideNormalLists ? 'none' : 'block';
+                document.querySelector('.section-title:nth-of-type(2)').style.display = shouldHideNormalLists ? 'none' : 'block';
+                document.getElementById('new-games').style.display = shouldHideNormalLists ? 'none' : 'block';
+                document.getElementById('popular-games').style.display = shouldHideNormalLists ? 'none' : 'block';
+            }
+            
+            // Arama butonuna tıklandığında
+            searchBtn.addEventListener('click', performSearch);
+            
+            // Enter tuşuna basıldığında
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Aramayı temizle butonuna tıklandığında
+            clearSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+                
+                // Normal oyun listelerini göster
+                document.querySelector('.info-banner').style.display = 'block';
+                document.querySelector('.section-title:nth-of-type(1)').style.display = 'block';
+                document.querySelector('.section-title:nth-of-type(2)').style.display = 'block';
+                document.getElementById('new-games').style.display = 'block';
+                document.getElementById('popular-games').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
